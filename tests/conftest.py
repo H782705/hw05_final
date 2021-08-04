@@ -1,7 +1,6 @@
-import sys
 import os
-from subprocess import Popen, PIPE
-
+import sys
+from subprocess import PIPE, Popen
 
 root_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(root_dir)
