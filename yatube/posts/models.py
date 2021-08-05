@@ -65,5 +65,8 @@ class Follow(models.Model):
         User, on_delete=models.CASCADE, related_name="following"
     )
 
+    class Meta:
+        unique_together = ("user", "author")
+
     def __str__(self):
         return f"user: {self.user.username} author: {self.author.username}"

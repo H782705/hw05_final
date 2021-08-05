@@ -135,12 +135,8 @@ def follow_index(request):
 def profile_follow(request, username):
     user = get_object_or_404(User, username=request.user)
     author = get_object_or_404(User, username=username)
-    if user == author:
-        return redirect("posts:profile", username)
-    follow = Follow.objects.filter(user=user, author=author).exists()
-    if follow:
-        return redirect("posts:profile", username)
-    Follow.objects.create(user=user, author=author)
+    if user != author:
+        Follow.objects.get_or_create(user=user, author=author)
     return redirect("posts:profile", username)
 
 
@@ -151,11 +147,3 @@ def profile_unfollow(request, username):
         user=request.user, author=unfollow_from_author
     ).delete()
     return redirect("posts:profile", username)
-
-
-def page_not_found(request, exception):
-    return render(request, "misc/404.html", {"path": request.path}, status=404)
-
-
-def server_error(request):
-    return render(request, "misc/500.html", status=500)
